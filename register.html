@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1">
+        <link rel="stylesheet" href="css/register.css">
+        <link rel="stylesheet" href="css/common.css">
+    </head>
+    <body>
+    	<header>
+            <p onclick="location.href='login.html'"><i class="iconfont icon-rtun">&#xe601;</i></p>
+    		<h1>用户注册</h1>
+    	</header>
+    	<main>
+    		<div class="reg">
+                <p>
+                    <label for="">账户名称:</label>
+                    <input class="iptname" type="text" placeholder="请输入账户">
+                </p>      
+            </div>
+            <div class="reg">
+                <p>
+                    <label for="">登录密码：</label>
+                    <input class="iptpwd" type="password" placeholder="请输入密码">
+                </p>      
+            </div>
+            <div class="reg">
+                <p>
+                    <label for="">确认密码：</label>
+                    <input class="respwd" type="password" placeholder="请输入密码">
+                </p>      
+            </div>
+            <div class="reg btn">
+                确定注册
+            </div> 
+    	</main>
+        <script src="js/jquery-1.11.3.js"></script>
+        <script src="js/font.js"></script>
+        <script> 
+            var register={
+                init:function(){
+                    this.ipt=$(".iptname");
+                    this.pwd=$(".iptpwd");
+                    this.respwd=$(".respwd");
+                    this.btn=$(".btn");
+                    this.click();
+                },
+                // focus:function(){
+
+                // },
+                click:function(){
+                    var that=this;
+                    this.btn.click(function(){
+                       
+                       
+                       if(that.pwd.val()!=that.respwd.val()){
+                            alert("密码不一致")
+                       }else{
+                          that.ajax();  
+                       }
+                    })
+                    
+                },
+                ajax:function(){
+                    var that=this;
+                    $.ajax({
+                        url:"http://datainfo.duapp.com/shopdata/userinfo.php",
+                        data:{
+                            status:"register",
+                            userID:that.ipt.val(),
+                            password:that.pwd.val()
+                        },
+                        success:function(res){
+                            if(res==0){
+                                alert("用户名已经存在")
+                            }else if(res==null){
+                                alert("请输入用户名")
+                            }else if(res==1){
+                                alert("恭喜您注册成功")
+                                location.href="login.html"
+                            }else if(res==2){
+                                alert("系统繁忙，请稍后登录")
+                            }
+                        }
+                        
+                    })  
+                }
+            }
+            register.init();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,71 @@
+html,body{
+	height: 100%;
+	margin: 0;
+    padding: 0;
+}
+/* h1,p,input,div,label{
+    padding: 0;
+    margin: 0;
+} */
+body{
+	display: flex;
+    -margin: 0;
+	flex-direction: column;
+}
+header{
+	height: 80px;
+	-line-height: 50px;
+	background: #a90506;
+	color: #fff;
+	justify-content: center;
+	display: flex;
+	align-items: center;
+    position: relative;
+}
+header p{
+    position: absolute;
+    left: 0.2rem;
+    width: 0.4rem;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    top: 0.2rem;
+}
+main{
+	background: #f3eff0;
+	display: flex;
+    overflow: hidden;
+    flex: 1;
+    flex-direction: column;
+}
+.reg{
+    display: flex;
+    justify-content:center;
+    background: #fff;
+    height: 0.8rem;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 0.2rem;
+    align-items: center;
+    border-radius: 0.1rem;
+}
+.reg p{
+    width: 90%;
+    line-height: 0.5rem;
+}
+input{
+    border: 0;
+    width: 65%;
+    height: 0.3rem;
+    font-size: 0.24rem;
+}
+.btn{
+    background: #d5090a;
+    color: #fff;
+    margin-top: 1rem;
+    border-radius: 0.1rem;
+    font-size: 0.3rem;
+}
+header .icon-rtun{
+    color: #fff;
+    font-size: 0.3rem;
+}

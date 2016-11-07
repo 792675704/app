@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1">
+        <link rel="stylesheet" href="css/swiper.min.css" >
+        <link rel="stylesheet" href="css/cart.css">
+        <link rel="stylesheet" href="css/common.css">
+    </head>
+    <body>
+        <header>
+            <h1>购物车</h1>
+            <div class="x_tit">结算</div>
+        </header>
+        <main>
+            <nav>
+                <p>商品数量<span class="shul"></span></p>
+                <p>应付总额（不含运费）：<span class="zhe"></span></p>
+            </nav>
+            <section class="wrapper">
+                <article class="content scroll">
+                    <!-- <div class="items">
+                        <img src="imgs/2.jpg">
+                        <p>气质T恤气质T恤气质T恤</p>
+                        <p>单价：<span>0</span></p>
+                        <p>数量：<span class="jian_btn">-</span><span class="number">0</span><span class="add_btn">+</span></p>
+                        <p class="scbtn">删除</p>
+                    </div> -->
+                    
+                </article>
+            </section>
+        </main>
+        <footer>
+            <div class="xq_box" onclick="location.href='index1.html'">
+                <i class="iconfont icon-nav">&#xe60c;</i>首页
+            </div>
+            <div class="xq_box" onclick="location.href='xq.html'">
+                <i class="iconfont icon-nav">&#xe600;</i>分类
+            </div>
+            <div class="xq_box"onclick="location.href='cart.html'">
+                <p><i class="dcart"></i></p>
+                <i class="iconfont icon-nav">&#xf0082;</i>购物车
+            </div>
+            <div class="xq_box" onclick="location.href='mexiu1.html'">
+                <i class="iconfont icon-nav">&#xe9bd;</i>我的秀
+            </div>
+            <div class="xq_box">
+                <i class="iconfont icon-nav">&#xf0013;</i>更多
+            </div>
+        </footer>
+        <script src="js/jquery-1.11.3.js"></script>
+        <script src="js/swiper.min.js"></script>
+        <script src="js/iscroll-probe.js"></script>
+        <script src="js/font.js"></script>
+        <script>
+            setTimeout(function(){
+                 var is ;
+                 is = new IScroll(".wrapper",{probeType:3,click:true});
+            },2000)
+
+
+
+            function callback(data){
+                //console.log(data)
+                var arr = data.map(function(item){
+                    //console.log(item)
+                    //var banimg=JSON.parse(item.goodsBenUrl);
+                    return '<div class="items" goodsId="'+item.goodsID+'"> <img src="'+item.goodsListImg+'"/><p>'+item.goodsName+'</p><p>单价：￥<span class="qian">'+item.price+'</span></p><p>数量：<span class="jian_btn">-</span><span class="number">'+item.number+'</span><span class="add_btn">+</span></p><p  class="scbtn iconfont" id="scbtn">&#xe62f;</p></div>';
+                });
+                document.querySelector(".content").innerHTML = arr.join("");
+                page1.abg();
+                //结算购物车
+                  
+                }
+            var page1 = {
+                init1:function(){
+                    this.click();
+                    var userID=localStorage.getItem("userID")
+                    //console.log(userID)
+                    this.jsonp("http://datainfo.duapp.com/shopdata/getCar.php?userID="+userID);
+                },
+                abg:function(){
+                      var shul=document.querySelector('.shul');
+                    var zhe=document.querySelector('.zhe');
+                    var number=document.querySelectorAll('.number');
+                    var qian=document.querySelectorAll('.qian');
+                    var dcart=document.querySelector('.dcart');
+                    var index=0;
+                    var num=0;
+                    
+                    for(var i=0;i<qian.length;i++){
+                        index+=parseInt(number[i].innerHTML)
+                        sum=number[i].innerHTML*qian[i].innerHTML;
+                        num+=sum;    
+                    }
+                    localStorage.setItem("number",index)
+                    dcart.innerHTML=shul.innerHTML=index;
+                    //console.log(num)
+                    zhe.innerHTML=num;
+                },
+                ajax:function(goodsId,userId,numberr){
+                    console.log(goodsId)
+                    $.ajax({
+                        url:"http://datainfo.duapp.com/shopdata/updatecar.php",
+                        data:{
+                            userID:userId,
+                            goodsID:goodsId,
+                            number:numberr
+                        },
+                        success:function(res){
+                            console.log(res)
+                            // if(res==0){
+                            //     //alert("操作成功")
+                            // }
+                        }
+                    })
+                },
+                click:function(){
+                    var that=this;
+                    document.onclick=function(e){
+                        var t = e.target;                        
+                        if(t.className=="items"){
+                            var goodsID = t.getAttribute("goodsId");
+                            var goodsID=localStorage.getItem("goodsID")
+                            var userID=localStorage.getItem("userID")
+                        }
+                        //删除宝贝
+                        if(t.id=="scbtn"){
+                            var goodsID=t.parentNode.getAttribute("goodsId");
+                            var number=0;
+                            var userID=localStorage.getItem("userID");
+                            if(confirm('确定删除宝贝吗？')){
+                                that.ajax(goodsID,userID,number);
+                                t.parentNode.remove() 
+                                //console.log(parentNode.removeChild()) 
+                            }
+
+                            
+                        }
+                        //加减数量
+                        if(t.className=="jian_btn"){
+                            var numb=t.parentNode.getElementsByClassName('number')[0];
+                            var goodsID=t.parentNode.parentNode.getAttribute("goodsId");
+                            numb.innerHTML--;
+                            var number =  numb.innerHTML;
+                            if(number<=1){
+                                numb.innerHTML=1;
+                            }
+                            that.ajax(goodsID,userID,number);
+                        }
+                        if(t.className=="add_btn"){
+                            var numb=t.parentNode.getElementsByClassName('number')[0];
+                            var goodsID=t.parentNode.parentNode.getAttribute("goodsId");
+                            numb.innerHTML++;
+                            var number =  numb.innerHTML;
+                            that.ajax(goodsID,userID,number);
+                        }
+                        that.abg();
+                    }
+                },
+                
+                jsonp:function(path){
+                    var s = document.querySelector("#jsonp");
+                    if(s){
+                        s.parentNode.removeChild(s);
+                    }
+
+                    var script = document.createElement("script");
+                    script.src = path;
+                    script.id = "jsonp";
+                    document.body.appendChild(script);
+                }
+            }
+
+            page1.init1();
+        </script>
+    </body>
+</html>

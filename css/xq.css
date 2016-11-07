@@ -1,0 +1,114 @@
+article.content:before,article.content:after{
+	width: 100%;
+	height: 0.3rem;
+	line-height: 0.3rem;
+	-background: #ccc;
+	color: #f00;
+	text-align: center;
+}
+article.content:after{
+	content: "加载中。。。";
+	bottom: -0.3rem;
+	position: absolute;
+}
+article.content:before{
+	content: "加载中。。。";
+	top: -0.3rem;
+	position: absolute;
+}
+h1{
+    margin:0
+}
+nav{
+    background:#666;
+    height:0.55rem;
+    line-height: 0.55rem;
+    position: relative;
+    z-index: 11;
+}
+.swiper-container{
+	height: 100%;
+}
+nav a{
+	height: 100%;
+	display: block;
+	text-decoration: none;
+    text-align:center;
+    display:block;
+    height:100%;
+    color:#fff;
+}
+main{
+    flex:1;
+}
+a.active{
+    background:#555;
+    color:#fff;
+    position:relative;
+}
+
+a.active:before{
+    content:"";
+    left:0;
+    right:0;
+    position:absolute;
+    margin:auto;
+    bottom:0;
+    width:0;
+    height:0;
+    border:0.06rem solid transparent;
+    border-bottom-color:#fff;
+}
+
+main {
+    display:flex;
+    flex-direction:column;
+    position: relative;
+}
+section {
+	width:100%;
+    position: absolute;
+    top: 0.35rem;
+    bottom: 0px;
+    overflow: hidden;
+}
+article.content {
+    display:flex;
+    flex-wrap:wrap;
+    background: #f3f4f6;
+    justify-content: center;
+}
+
+.item{
+    -box-sizing:border-box;
+    -flex-basis:50%;
+    padding:0 0.2rem;
+    padding-top: 0.15rem;
+    width: 2.4rem;
+    -background: #fff;  
+}
+.item h3{
+    width: 100%;
+    font-size: 0.3rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.item img{
+    width:100%;
+    height: 2.4rem;
+    border: 0.05rem solid #fff;
+    box-shadow: 0 0 0.04rem 0.02rem #ccc;
+}
+.price{
+    color: #d51113;
+    position: relative;
+}
+.price span{
+    color: #484850;
+    position: absolute;
+    right: 10px;
+    text-decoration: line-through;
+}
+
+

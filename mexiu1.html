@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1">
+        <link rel="stylesheet" href="css/swiper.min.css" >
+        <link rel="stylesheet" href="css/common.css">
+        <link rel="stylesheet" href="css/mexiu.css">
+    </head>
+    <body>
+    	<header>
+    		<h1>我的秀</h1>
+    		<div class="x_tit" onclick="location.href='login.html'">登录</div>
+    	</header>
+    	<main>
+            <div class="wrapper">
+                <div class="me_box">
+                    <div class="meimg"><i class="iconfont icon-ren">&#xe842;</i></div>
+                    <div class="memz">
+                        <p>昵称：<span class="names">未知</span></p>
+                        <p>余额：<span>0</span></p>
+                    </div>
+                </div>
+                <div class="me_box mebox2">
+                    <ul>
+                        <li>我的订单<i class="iconfont icon-me">&#xe635;</i></li>
+                        <li>我的优惠券<i class="iconfont icon-me">&#xe635;</i></li>
+                        <li>浏览记录<i class="iconfont icon-me">&#xe635;</i></li>
+                        <li style="border:none">我的收藏<i class="iconfont icon-me">&#xe635;</i></li>
+                    </ul>
+                </div>
+            </div>
+    	</main>
+        <div class="modal">
+            <div class="modal-bg"></div>
+            <div class="modal_con">
+                <span class="modalclose">x</span>
+                <div class="modalcon">
+                    <p>选择操作</p>
+                    <div class="modalbox">
+                        <div class="modal_box">相机</div>
+                        <div class="modal_box">相册</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    	<footer>
+            <div class="xq_box" onclick="location.href='index1.html'">
+                <i class="iconfont icon-nav">&#xe60c;</i>首页
+            </div>
+            <div class="xq_box" onclick="location.href='xq.html'">
+                <i class="iconfont icon-nav">&#xe600;</i>分类
+            </div>
+            <div class="xq_box"onclick="location.href='cart.html'">
+                <i class="iconfont icon-nav">&#xf0082;</i>购物车
+            </div>
+            <div class="xq_box" onclick="location.href='mexiu1.html'">
+                <i class="iconfont icon-nav">&#xe9bd;</i>我的秀
+            </div>
+            <div class="xq_box">
+                <i class="iconfont icon-nav">&#xf0013;</i>更多
+            </div>
+        </footer>
+    	<script src="js/swiper.min.js"></script>
+    	<script src="js/iscroll-probe.js"></script>
+        <script src="js/jquery-1.11.3.js"></script>
+        <script src="js/font.js"></script>
+        <script>
+            $(function(){
+                $('.meimg').click(function(){
+                    $('.modal').show();
+                })
+                $('.modal').click(function(e){
+                    if(!$(e.target).is('.modalcon,.modalcon *')){
+                        $('.modal').hide();
+                    }
+                })
+            })
+        </script>
+        <script>
+            setTimeout(function(){
+                 var is ;
+                 is = new IScroll(".wrapper",{probeType:3,click:true});
+            },2000)
+
+            function callback(data){
+                var arr = data.map(function(item){
+                    console.log(item)
+                });
+            }
+
+            var page = {
+                init:function(){
+                    this.bindEvent();
+                    this.locat();
+                },
+                locat:function(){
+                    var userId=localStorage.getItem("userID")
+                    console.log(userId);
+                    document.querySelector(".names").innerHTML=userId;
+                },
+                bindEvent:function(){
+                    var that = this;
+                    that.jsonp("http://datainfo.duapp.com/shopdata/getuser.php");
+                },
+                jsonp:function(path){
+                    var s = document.querySelector("#jsonp");
+                    if(s){
+                        s.parentNode.removeChild(s);
+                    }
+
+                    var script = document.createElement("script");
+                    script.src = path;
+                    script.id = "jsonp";
+                    document.body.appendChild(script);
+                }
+            }
+
+            page.init();
+        </script>
+    </body>
+</html>

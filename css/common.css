@@ -1,0 +1,88 @@
+html,body {height:100%}
+body{
+    display:flex;
+    position:relative;
+    flex-direction:column;
+    margin:0;
+    font-size: 0.24rem;
+}
+header{
+	height: 0.8rem;
+	-line-height: 50px;
+	background: #a90506;
+	color: #fff;
+	justify-content: center;
+	display: flex;
+	align-items: center;
+    position: relative;
+}
+header h1{
+	font-size: 0.37rem;
+}
+footer{
+    height: 1rem;
+	-line-height: 50px;
+	background: #484850;
+	color: #fff;
+	justify-content: center;
+	display: flex;
+	align-items: center;
+    position: relative;
+}
+.xq_box{
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	justify-content: center;
+	font-weight: bold;
+	-height: 80px;
+	-line-height: 35px;
+	align-items: center;
+	font-size: 0.3rem;	
+}
+/* .xq_box:hover{
+	border-top: 3px solid #f00;
+} */
+.x_tit{
+	-padding: 0.05rem 0.1rem;
+	text-align: center;
+	color: #fff;
+	border-radius: 0.05rem;
+	background: #a90506;
+	position: absolute;
+	right: 0.2rem;
+	border: 0.01rem solid #ccc;
+	width: 0.6rem;
+	height: 0.4rem;
+	line-height: 0.4rem;
+	top: 0.2rem;
+}
+div,p,ul,li{
+	margin: 0;
+	padding: 0;
+}
+@font-face {
+  font-family: 'iconfont';
+  src: url('iconfont.eot');
+  src: url('iconfont.eot?#iefix') format('embedded-opentype'),
+  url('iconfont.woff') format('woff'),
+  url('iconfont.ttf') format('truetype'),
+  url('iconfont.svg#iconfont') format('svg');
+}
+.iconfont{
+  font-family:"iconfont" !important;
+  font-size:16px;font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-nav{
+	color: #fff;
+	font-size: 0.35rem;
+}
+.icon-cart{
+	font-size: 0.24rem;
+}
+input{
+	outline: none;
+}

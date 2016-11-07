@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1">
+        <link rel="stylesheet" href="css/swiper.min.css" >
+        <link rel="stylesheet" href="css/xqy.css">
+        <link rel="stylesheet" href="css/common.css">
+    </head>
+    <body>
+    	<div class="box-modal">
+            <header>
+	    		<div class="x_titl" onclick="location.href='xqy.html'"><i class="iconfont icon-nav">&#xe601;</i></div>
+	    		<h1>商品资料</h1>
+	    		 <div class="x_tit" onclick="location.href='cart.html'"><i class="iconfont icon-nav">&#xf0082;</i></div> 
+	    	</header>
+	    	<div class=" boxXq">
+    			<div class=" boxXq2">
+    				<div class="listbox">
+    					
+    				</div>
+    			</div>
+    		</div>
+        </div>
+    	<header>
+    		<div class="x_titl" onclick="location.href='xq.html'"><i class="iconfont icon-nav">&#xe601;</i></div>
+    		<h1>商品资料</h1>
+    		<div class="x_tit" onclick="location.href='cart.html'"><i class="iconfont icon-nav">&#xf0082;</i></div>
+    	</header>
+    	<main>
+    		<nav>
+    			<div class="swiper-container">
+    				<div class="swiper-wrapper">
+    					
+    				</div>
+    				<div class="swiper-pagination"></div>
+    			</div>
+    		</nav>
+    		<article>
+    			<!-- <p>添加到购物车</p>
+    			<p>￥222<sapn>￥222</sapn></p>
+	    		<p>添加到购物车</p>	 -->
+    		</article>
+    		
+<!--     		<section>
+    			<div class="cpxq-box">
+    				<i class="iconfont cpxq">&#xe65c;</i>
+    				查看商品详情
+    				<i class="iconfont cpxqj">&#xe635;</i>
+    			</div>
+    		</section> -->
+    	</main>
+		<section>
+			<div class="cpxq-box">
+				<i class="iconfont cpxq">&#xe65c;</i>
+				查看商品详情
+				<i class="iconfont cpxqj">&#xe635;</i>
+			</div>
+		</section>
+    	<footer>
+    		<div class="xqy_cartbtn2">
+                添加到购物车      
+            </div>
+    	</footer>
+    	<script src="js/jquery-1.11.3.js"></script>
+    	<script src="js/swiper.min.js"></script>
+    	<script src="js/iscroll-probe.js"></script>
+    	<script src="js/font.js"></script>
+    	<script>
+    		//setTimeout(function(){
+                 var is ;
+                 is = new IScroll(".boxXq",{probeType:3});
+            //},2000)
+    		function callback(data){
+			    var arr = data.map(function(item,i){
+			       // console.log(item)
+			        
+			        var banimg=JSON.parse(item.imgsUrl);
+			        //console.log(banimg)
+			        return banimg.map(function(res){
+			        	return '<div class="swiper-slide"> <img src="'+res+'"/></div>'
+			        }).join('')
+			    });
+			    var arr2 = data.map(function(item,i){
+			    	var dab=parseInt(item.price/(item.discount*0.1))
+			    	return '<p>'+item.goodsName+'</p><p class="prices">￥'+item.price+'<span>￥'+dab+'</span></p><p>购买人数&nbsp;&nbsp;'+item.buynumber+'</p>'
+			    });
+			    var arr3 = data.map(function(item,i){
+			    	var img=JSON.parse(item.goodsBenUrl);
+			    	var tit=item.detail.split('。').join('<br>')
+			    	return ' <div class="imgbox"><img src="'+img[0]+'"/></div><p>'+tit+'</p>'
+			    });
+			    document.querySelector(".swiper-wrapper").innerHTML = arr.join("");
+			    document.querySelector("article").innerHTML = arr2.join("");
+			    document.querySelector(".listbox").innerHTML = arr3.join("");
+                 is.refresh();
+
+			    new Swiper(".swiper-container",{
+			        direction:"horizontal",
+			        pagination:".swiper-pagination",
+			        autoplay:3000             
+			    })
+			}
+			var page1 = {
+				
+			    init1:function(){
+			    	this.click();
+			    	var goodsID=localStorage.getItem("goodsID")
+			        this.jsonp("http://datainfo.duapp.com/shopdata/getGoods.php?goodsID="+goodsID);
+			    },
+			    ajax:function(goodsID,userID){
+			    	//var this=that;
+
+			    	$.ajax({
+			    		url:"http://datainfo.duapp.com/shopdata/updatecar.php",
+			    		data:{
+			    			goodsID:goodsID,
+			    			userID:userID
+			    		},
+			    		success:function(res){
+			    			//console.log(res)
+			    			if(res==1){
+			    				alert("成功加入购物车")
+			    			}else if(res==0){
+			    				alert("添加失败")
+			    			}else if(userID==null){
+			    				alert("登录之后再添加商品")
+			    			}
+			    		}
+			    	})
+			    },
+			    click:function(){
+
+			    	var boxbtn=document.querySelector('.cpxq-box')
+			    	var modals=document.querySelector('.box-modal')
+			    	boxbtn.onclick=function(){
+			    		modals.style.top=0;
+			    	}
+			    	var Cartbtn2=document.querySelector('.xqy_cartbtn2')
+			    	var that=this;
+			    	document.onclick=function(e){
+			    		var t = e.target;
+			    		//console.log()
+			    		
+			    		if(t.className=="xqy_cartbtn2"){
+			    			//console.log(goodsID)
+			    			var goodsID=localStorage.getItem("goodsID")
+			    			var userID=localStorage.getItem("userID")
+			    			that.ajax(goodsID,userID);
+			    			//console.log(goodsID)
+			    			//console.log(userID)
+			    		}
+			    	}
+
+			    },
+			    jsonp:function(path){
+			        var s = document.querySelector("#jsonp");
+			        if(s){
+			            s.parentNode.removeChild(s);
+			        }
+			        var script = document.createElement("script");
+			        script.src = path;
+			        script.id = "jsonp";
+			        document.body.appendChild(script);
+			    }
+			}
+
+			page1.init1();
+    	</script>
+    </body>
+</html>

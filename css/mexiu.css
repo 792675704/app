@@ -1,0 +1,113 @@
+main{
+	flex: 1;
+}
+.me_box{
+	display: flex;
+    -justify-content:center;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 0.5rem;
+    -align-items: center;
+}
+/* .meimg{
+	width: 120px;
+	height: 120px;
+	background: #ccc;
+	border-radius: 10px;
+} */
+.memz p{
+	line-height: 0.5rem;
+	margin-left: 0.2rem;
+    font-size: 0.3rem;
+}
+.mebox2{
+	border-radius: 0.1rem;
+	border: 0.01rem solid #484850;
+}
+ul,li{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+}
+.mebox2 li{
+	line-height: 0.8rem;
+	border-bottom: 0.01rem solid #484850;
+	text-indent: 1rem;
+    color: #484850;
+}
+.modal{
+	position: fixed;
+    top: 0;
+	width: 100%;
+	height: 100%;
+    display: none;
+    z-index: 1000;
+    -background: #fff;
+}
+.modal-bg{
+	width: 100%;
+    height: 100%;
+    background-color: #333;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    -display: none;
+}
+.modal_con{
+	position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 80%;
+    height: 40%;
+    margin: auto;
+    border-radius: 0.1rem;
+    background-color: #fff;
+}
+.modalclose{
+	position: absolute;
+    right: 0.1rem;
+    top: 0.1rem;
+    width: 0.2rem;
+    height: 0.2rem;
+    color: #BBB;
+    font-size: 0.3rem;
+    font-weight: bold;
+    line-height: 0.2rem;
+    text-align: center;
+    cursor: pointer;
+}
+.modalcon{
+	padding: 0.25rem;
+}
+.modalcon p{
+	border-bottom: 0.01rem solid #ccc;
+	line-height: 0.2rem;
+	text-align: center;
+	font-size: 0.24rem;
+	padding-bottom: 0.12rem;
+}
+.modalbox{
+	display: flex;
+	flex-direction: row;
+}
+.modal_box{
+	padding: 0.2rem;
+	display: flex;
+    justify-content:center;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 0.4rem;
+    align-items: center;
+}
+.icon-ren{
+    font-size: 1.5rem;
+    color: #484850;
+}
+.icon-me{
+    color: #484850;
+    font-size: 24px;
+    float: right;
+    margin-right: 25px;
+}

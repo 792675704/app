@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1">
+    </head>
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+    	/* html,body{
+    		height: 100%;
+    		margin: 0;
+            padding: 0;
+    	}
+    	body{
+    		display: flex;
+            -margin: 0;
+    		flex-direction: column;
+    	}
+		header{
+    		height: 80px;
+			-line-height: 50px;
+			background: #a90506;
+			color: #fff;
+    		justify-content: center;
+    		display: flex;
+    		align-items: center;
+            position: relative;
+    	} */
+    	main{
+    		background: #f3eff0;
+    		display: flex;
+            overflow: hidden;
+            flex: 1;
+            flex-direction: column;
+    	}
+        .login{
+            display: flex;
+            justify-content:center;
+            background: #fff;
+            height: 0.7rem;
+            width: 90%;
+            margin: 0 auto;
+            margin-top: 0.05rem;
+            align-items: center;
+            border-radius: 0.05rem;
+        }
+        .logtop{
+            margin-top: 0.2rem;
+        }
+        .login p{
+            width: 90%;
+        }
+       .login input{
+            border: 0;
+            width: 100%;
+            height: 0.4rem;
+            font-size: 0.3rem;
+        }
+        .log_btn{
+            background: #d5090a;
+            color: #fff;
+            margin-top: 0.66rem;
+            font-size: 0.3rem;
+        }
+        .log_reg{
+            background: #555;
+        }
+        .log_qit{
+            background: none;
+            color: #5b5b5b;
+        }
+        .log_qit input{
+            width: 8%;
+        }
+        .log_qit span{
+            color: #ff1051;
+        }
+    </style>
+    <body>
+    	<header>
+    		<h1>开心摇摇用户登录</h1>
+    	</header>
+    	<main>
+    		<div class="login logtop">
+                <p>
+                    <input class="log-name" type="text" placeholder="请输入账户">
+                </p>      
+            </div>
+            <div class="login">
+                <p>
+                    <input class="logpwd" type="password" placeholder="请输入密码">
+                </p>      
+            </div>
+            <div class="login log_qit">
+                <p>
+                    <input type="checkbox">
+                    <label for="">显示密码</label>
+                    <span>忘记密码？</span>
+                </p>      
+            </div>
+            <div class="login log_qit">
+                <p>
+                    <input type="checkbox">
+                    <label for="">记住密码自动登录</label>
+                </p>      
+            </div>
+            <div class="login log_btn">
+                登录
+            </div>
+            <div class="login log_reg" onclick="location.href='register.html'">
+                注册
+            </div>  
+    	</main>
+        <script src="js/jquery-1.11.3.js"></script>
+        <script src="js/font.js"></script>
+         <script> 
+            var login={
+                init:function(){
+                    this.logName=$(".log-name");
+                    this.logpwd=$(".logpwd");
+                    this.logBtn=$(".log_btn");
+                    this.click();
+                    //this.locat();
+                },
+                click:function(){
+                    var that=this;
+                    this.logBtn.click(function(){ 
+                       that.ajax();
+                       //location.href="index1.html"
+                    })  
+                },
+                ajax:function(){
+                    var that=this;
+                    $.ajax({
+                        url:"http://datainfo.duapp.com/shopdata/userinfo.php",
+                        data:{
+                            status:"login",
+                            userID:that.logName.val(),
+                            password:that.logpwd.val()
+                        },
+                        success:function(res){
+                            console.log(res)
+                            if(res==0){
+                                alert("用户名不存在")
+                            }else if(that.logName.length==0){
+                                alert("请输入用户名")
+                            }else if(res==2){
+                                alert("用户名或者密码不符")
+                            }else{
+                                var data=JSON.parse(res);
+                                var userID=data.userID;
+                                console.log(userID)
+                                password=data.password
+                                localStorage.setItem("userID",userID)
+                                location.href="mexiu1.html"
+                                //location.href="index1.html"
+                            }
+                        }    
+                    })
+                }
+            }
+            login.init();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1">
+        <link rel="stylesheet" href="css/swiper.min.css" >
+        <link rel="stylesheet" href="css/xq.css">
+        <link rel="stylesheet" href="css/common.css">
+    </head>
+    <body>
+        
+    	<header>
+    		<h1>新品上市</h1>
+    		<div class="x_tit" onclick="location.href='cart.html'"><i class="iconfont icon-cart">&#xf0082;</i></div>
+    	</header>
+    	<main>
+    		<nav>
+    			<div class="swiper-container">
+    				<div class="swiper-wrapper">
+    					
+    				</div>
+    			</div>
+    		</nav>
+    		<section class="wrapper">
+    			<article class="content scroll">
+    				
+    			</article>
+    		</section>
+    	</main>
+    	<footer>
+            <div class="xq_box" onclick="location.href='index1.html'">
+                <i class="iconfont icon-nav">&#xe60c;</i>首页
+            </div>
+            <div class="xq_box" onclick="location.href='xq.html'">
+                <i class="iconfont icon-nav">&#xe600;</i>分类
+            </div>
+            <div class="xq_box"onclick="location.href='cart.html'">
+                <i class="iconfont icon-nav">&#xf0082;</i>购物车
+            </div>
+            <div class="xq_box" onclick="location.href='mexiu1.html'">
+                <i class="iconfont icon-nav">&#xe9bd;</i>我的秀
+            </div>
+            <div class="xq_box">
+                <i class="iconfont icon-nav">&#xf0013;</i>更多
+            </div>
+        </footer>
+    	<script src="js/swiper.min.js"></script>
+    	<script src="js/iscroll-probe.js"></script>
+        <script src="js/font.js"></script>
+    	<script>
+    		var is;
+    		var downRefresh=upLoading=false;
+    		setTimeout(function(){
+    			is=new IScroll(".wrapper",{probeType:3,click:true});
+   
+    			is.on("scrollEnd",function(){
+    				if(downRefresh){
+    					downRefresh=false;
+    					for(var i=0;i<4;i++){
+    						var div=document.createElement("div")
+    						div.innerHTML=Math.random()
+    						div.className="item";
+    						var art=document.querySelector(".scroll")
+    						art.insertBefore(div,art.firstElementChild)
+    					}
+    					is.refresh();
+    				}else if(upLoading){
+    					for(var i=0;i<4;i++){
+    						var div=document.createElement("div")
+    						div.innerHTML=Math.random()
+    						div.className="item";
+    						var art=document.querySelector(".scroll")
+    						art.appendChild(div)
+    					}
+    					is.refresh();
+    				}
+    			})
+    			is.on("scroll",function(){
+    				if(this.y>30){
+	    				downRefresh=true;
+	    			}else if(this.y<this.maxScrollY-100){
+	    				upLoading=true;
+	    			}
+    			})
+    		},3000)
+    		////////////
+	    	function callback(data){
+				var arr = data.map(function(item){
+                    var dab=parseInt(item.price/(item.discount*0.1))
+                    return '<div class="item" goodsId="'+item.goodsID+'"> <img src="'+item.goodsListImg+'"/><h3>'+item.goodsName+'</h3><div class="price">价格：￥'+item.price+'<span>￥'+dab+'</span></div> </div>';
+				});
+				document.querySelector(".content").innerHTML = arr.join("")
+			}
+
+			var page = {
+				init:function(){
+                    //this.bind();
+					this.bindEvent();
+					this.getClass(function(classes){
+						var html = [
+							'<div class="swiper-slide"> ',
+								'<a classID="{classID}" href="javascript:void(0)">{className}</a>',
+							'</div>'
+						].join("");
+						classes = JSON.parse(classes);
+						var slides = classes.map(function(item){
+							return html.replace(/{(\w+)}/g,function(){
+								return item[arguments[1]];
+							});
+						});
+						document.querySelector(".swiper-wrapper").innerHTML = slides.join("");
+
+
+						new Swiper(".swiper-container",{
+							slidesPerView:5
+						})
+
+						document.querySelector("a").click();
+					});
+				},
+				bindEvent:function(){
+					var self = this;
+					document.onclick = function(e){
+                        //console.log(e)
+						var t = e.target;
+                        
+						if(t.tagName=="A"){
+							var prev = document.querySelector(".active");
+							prev&&(prev.className="");
+							t.className = "active";
+
+							// document.querySelector(".content").innerHTML = t.innerHTML;
+							var classID = t.getAttribute("classid");
+							self.jsonp("http://datainfo.duapp.com/shopdata/getGoods.php?classID="+classID);
+						}
+                        for(var key in e.path){
+                            if(e.path[key].className=="item"){
+                                var goodsID=e.path[key].getAttribute("goodsId")
+                                localStorage.setItem("goodsID",goodsID);
+                                location.href="xqy.html"
+                            }
+                        }
+					}
+				},
+				getClass:function(fn){
+					var xhr = new XMLHttpRequest;
+					xhr.onreadystatechange = function(){
+						if(xhr.status==200&&xhr.readyState==4){
+							fn(xhr.responseText)
+						}
+					}
+					xhr.open("get","http://datainfo.duapp.com/shopdata/getclass.php",true);
+					xhr.send();
+				},
+				jsonp:function(path){
+					var s = document.querySelector("#jsonp");
+					if(s){
+						s.parentNode.removeChild(s);
+					}
+
+					var script = document.createElement("script");
+					script.src = path;
+					script.id = "jsonp";
+					document.body.appendChild(script);
+				}
+			}
+
+			page.init();
+    	</script>
+    </body>
+</html>
